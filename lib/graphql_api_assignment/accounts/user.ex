@@ -1,6 +1,7 @@
 defmodule GraphqlApiAssignment.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query
 
   schema "users" do
     field :email, :string
@@ -9,6 +10,16 @@ defmodule GraphqlApiAssignment.Accounts.User do
     has_one(:preference, GraphqlApiAssignment.Accounts.Preference, on_replace: :update)
 
     timestamps()
+  end
+
+  def user_by_preference(query \\ User) do 
+    join(query, :inner, [u], p in assoc(u, :preference), as: :preference)
+  end
+
+  def where_preference(query \\ User, preference) do 
+    Enum.reduce(preference, query, fn {key, val}, acc -> 
+      where(acc, [preference: p], field(p, ^key) == ^val)
+    end)
   end
 
   @available_fields [:name, :email]

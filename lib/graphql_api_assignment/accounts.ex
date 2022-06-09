@@ -4,37 +4,27 @@ defmodule GraphqlApiAssignmentWeb.Accounts do
   alias GraphqlApiAssignment.Repo
   alias EctoShorts.Actions
 
-  import Ecto.Query
+  @available_preferences [:likes_emails, :likes_phone_calls]
+
 
   def all(params \\ %{}) do
-    %{filters: filter_params, preference: preference_params}= do_all_build_params(params)
+    %{filters: filter_params, preference: preference_params} = reformat_params(params)
 
-    filter_params = Keyword.new(filter_params)
-    preference_params = Keyword.new(preference_params)
-    
     User 
-    |> join(:inner, [u], p in assoc(u, :preference), as: :preference)
-    |> where_preference(preference_params)
+    |> User.user_by_preference
+    |> User.where_preference(preference_params)
     |> Actions.all(filter_params)
   end
 
-  defp where_preference(query, preference) do 
-    Enum.reduce(preference, query, fn {key, val}, acc -> 
-      where(acc, [preference: p], field(p, ^key) == ^val)
-    end)
-  end
-
-  defp do_all_build_params(params) do 
-    params = Enum.reduce(params, %{preference: %{}, filters: %{}}, fn filter, acc -> 
-      {key, value} = filter
-      regex = ~r/likes_[a-z_]/
-      cond do 
-        String.match?(Atom.to_string(key), regex) -> 
-          acc = put_in(acc[:preference][key], value)
-        true -> 
-          acc = put_in(acc[:filters][key], value)
+  defp reformat_params(params) do 
+    params = Enum.reduce(params, %{preference: %{}, filters: %{}}, fn {key, val}, acc -> 
+      if key in @available_preferences do 
+        put_in(acc, [:preference, key], val)
+      else
+        put_in(acc, [:filters, key], val)
       end
     end)
+    params = %{filters: Keyword.new(params.filters), preference: Keyword.new(params.preference)}
   end
   
   def find(params) do
