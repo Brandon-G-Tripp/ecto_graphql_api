@@ -7,7 +7,7 @@ defmodule GraphqlApiAssignment.Accounts.User do
     field :email, :string
     field :name, :string
 
-    has_one(:preference, GraphqlApiAssignment.Accounts.Preference, on_replace: :update)
+    has_one :preference, GraphqlApiAssignment.Accounts.Preference, on_replace: :update
 
     timestamps()
   end
