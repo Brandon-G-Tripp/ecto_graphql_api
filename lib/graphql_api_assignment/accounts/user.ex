@@ -12,16 +12,6 @@ defmodule GraphqlApiAssignment.Accounts.User do
     timestamps()
   end
 
-  def user_by_preference(query \\ User) do 
-    join(query, :inner, [u], p in assoc(u, :preference), as: :preference)
-  end
-
-  def where_preference(query \\ User, preference) do 
-    Enum.reduce(preference, query, fn {key, val}, acc -> 
-      where(acc, [preference: p], field(p, ^key) == ^val)
-    end)
-  end
-
   @available_fields [:name, :email]
 
   def create_changeset(params) do 
@@ -35,5 +25,15 @@ defmodule GraphqlApiAssignment.Accounts.User do
     |> cast(attrs, @available_fields)
     |> validate_required(@available_fields)
     |> cast_assoc(:preference)
+  end
+
+  def user_by_preference(query \\ User) do 
+    join(query, :inner, [u], p in assoc(u, :preference), as: :preference)
+  end
+
+  def where_preference(query \\ User, preference) do 
+    Enum.reduce(preference, query, fn {key, val}, acc -> 
+      where(acc, [preference: p], field(p, ^key) == ^val)
+    end)
   end
 end
