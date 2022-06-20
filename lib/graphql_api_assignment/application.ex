@@ -16,9 +16,10 @@ defmodule GraphqlApiAssignment.Application do
       {Phoenix.PubSub, name: GraphqlApiAssignment.PubSub},
       # Start the Endpoint (http/https)
       GraphqlApiAssignmentWeb.Endpoint,
-      {Absinthe.Subscription, GraphqlApiAssignmentWeb.Endpoint}
+      {Absinthe.Subscription, GraphqlApiAssignmentWeb.Endpoint},
       # Start a worker by calling: GraphqlApiAssignment.Worker.start_link(arg)
       # {GraphqlApiAssignment.Worker, arg}
+      GraphqlApiAssignment.ResolverHitGenServer
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

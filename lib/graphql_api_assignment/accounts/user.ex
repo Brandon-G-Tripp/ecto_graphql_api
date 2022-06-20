@@ -21,9 +21,9 @@ defmodule GraphqlApiAssignment.Accounts.User do
   @doc false
   def changeset(user = %GraphqlApiAssignment.Accounts.User{}, attrs) do
     user
-    |> EctoShorts.CommonChanges.preload_changeset_assoc(:preference)
     |> cast(attrs, @available_fields)
     |> validate_required(@available_fields)
+    |> EctoShorts.CommonChanges.preload_changeset_assoc(:preference)
     |> cast_assoc(:preference)
   end
 

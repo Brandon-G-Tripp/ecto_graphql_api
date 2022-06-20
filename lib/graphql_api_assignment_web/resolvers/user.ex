@@ -1,5 +1,5 @@
 defmodule GraphqlApiAssignmentWeb.Resolvers.User do
-  alias GraphqlApiAssignmentWeb.Accounts
+  alias GraphqlApiAssignment.Accounts
 
   def find(%{id: id}, _) do
     id = String.to_integer(id)

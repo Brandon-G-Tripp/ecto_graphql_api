@@ -2,13 +2,16 @@ defmodule GraphqlApiAssignmentWeb.Schema do
   use Absinthe.Schema
 
   import_types GraphqlApiAssignmentWeb.Types.User
+  import_types GraphqlApiAssignmentWeb.Types.ResolverHits
 
   import_types GraphqlApiAssignmentWeb.Schema.Queries.User
+  import_types GraphqlApiAssignmentWeb.Schema.Queries.ResolverHits
   import_types GraphqlApiAssignmentWeb.Schema.Mutations.User
   import_types GraphqlApiAssignmentWeb.Schema.Subscriptions.User
 
   query do
     import_fields :user_queries
+    import_fields :resolver_hit_queries
   end
 
   mutation do 
