@@ -2,7 +2,6 @@ defmodule GraphqlApiAssignment.Accounts do
   alias GraphqlApiAssignment.Accounts.User
   alias GraphqlApiAssignment.Accounts.Preference
   alias GraphqlApiAssignment.ResolverHitGenServer
-  alias GraphqlApiAssignment.Repo
   alias EctoShorts.Actions
 
   @available_preferences [:likes_emails, :likes_phone_calls]
@@ -28,7 +27,7 @@ defmodule GraphqlApiAssignment.Accounts do
         put_in(acc, [:filters, key], val)
       end
     end)
-    params = %{filters: Keyword.new(params.filters), preference: Keyword.new(params.preference)}
+    %{filters: Keyword.new(params.filters), preference: Keyword.new(params.preference)}
   end
   
   def find(params) do
@@ -52,6 +51,8 @@ defmodule GraphqlApiAssignment.Accounts do
   def update_user_preference(id, params) do 
     ResolverHitGenServer.add_hit("update_user_preference")
 
-    Actions.update(Preference, id, params)
+    {:ok, preference} = Actions.find(Preference, %{user_id: id})
+
+    Actions.update(Preference, preference, params)
   end
 end

@@ -7,8 +7,6 @@ defmodule GraphqlApiAssignment.Accounts.Preference do
     field :likes_phone_calls, :boolean, default: false
 
     belongs_to(:user, GraphqlApiAssignment.Accounts.User)
-
-    timestamps()
   end
 
   @available_fields [:likes_phone_calls, :likes_emails]
