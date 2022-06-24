@@ -5,6 +5,7 @@ defmodule GraphqlApiAssignmentWeb.Types.UserPreferences do
   object :user_preference do
     field :likes_emails, :boolean
     field :likes_phone_calls, :boolean
+    field :user_id, :id
   end
 
 end
