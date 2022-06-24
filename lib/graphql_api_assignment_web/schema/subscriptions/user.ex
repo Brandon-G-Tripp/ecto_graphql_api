@@ -12,15 +12,15 @@ defmodule GraphqlApiAssignmentWeb.Schema.Subscriptions.User do
       end
     end
 
-    field :updated_user_preference, :user do
-      arg :id, non_null(:string)
+    field :updated_user_preference, :user_preference do
+      arg :user_id, non_null(:id)
 
-      trigger :update_user_preference, topic: fn user -> 
-        "user_preference_update:#{user.id}"
+      trigger :update_user_preference, topic: fn preference -> 
+        "user_preference_update:#{preference.user_id}"
       end
 
       config fn args, _ ->
-        {:ok, topic: "user_preference_update:#{args.id}"}
+        {:ok, topic: "user_preference_update:#{args.user_id}"}
       end
 
     end
