@@ -19,7 +19,7 @@ defmodule GraphqlApiAssignment.Accounts.User do
   end
 
   @doc false
-  def changeset(user = %GraphqlApiAssignment.Accounts.User{}, attrs) do
+  def changeset(%GraphqlApiAssignment.Accounts.User{} = user, attrs) do
     user
     |> cast(attrs, @available_fields)
     |> validate_required(@available_fields)
