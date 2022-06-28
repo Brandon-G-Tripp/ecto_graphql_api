@@ -32,7 +32,7 @@ defmodule GraphqlApiAssignmentWeb.Schema.Mutations.UserTest do
   describe "createUser" do 
     test "creates a user" do 
       users = Accounts.all
-      assert length(users) === 0
+      assert Enum.empty?(users) === 0
 
       assert {:ok, %{data: data}} = Absinthe.run(@create_user_doc,
         Schema, 

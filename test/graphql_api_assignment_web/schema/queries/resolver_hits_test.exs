@@ -45,7 +45,7 @@ defmodule GraphqlApiAssignmentWeb.Schema.Queries.ResolverHitsTest do
 
       %{"resolverHits" => %{
         "key" => key,
-        "queryHits" => queryHits
+        "query_hits" => queryHits
         }
       } = data
 
@@ -63,7 +63,7 @@ defmodule GraphqlApiAssignmentWeb.Schema.Queries.ResolverHitsTest do
 
       %{"resolverHits" => %{
         "key" => _key,
-        "queryHits" => queryHits_after_query
+        "query_hits" => queryHits_after_query
         }
       } = data
 
