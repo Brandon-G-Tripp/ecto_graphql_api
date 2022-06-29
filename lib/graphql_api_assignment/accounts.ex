@@ -1,7 +1,6 @@
 defmodule GraphqlApiAssignment.Accounts do
   alias GraphqlApiAssignment.Accounts.User
   alias GraphqlApiAssignment.Accounts.Preference
-  alias GraphqlApiAssignment.ResolverHitGenServer
   alias EctoShorts.Actions
 
   @available_preferences [:likes_emails, :likes_phone_calls]
@@ -10,11 +9,8 @@ defmodule GraphqlApiAssignment.Accounts do
   def all(params \\ %{}) do
     %{filters: filter_params, preference: preference_params} = reformat_params(params)
 
-    ResolverHitGenServer.add_hit("users")
-
-
     User 
-    |> User.user_by_preference
+    |> User.join_preferences
     |> User.where_preference(preference_params)
     |> Actions.all(filter_params)
   end
@@ -31,28 +27,20 @@ defmodule GraphqlApiAssignment.Accounts do
   end
   
   def find(params) do
-    ResolverHitGenServer.add_hit("user")
-
     Actions.find(User, params)
   end
 
   def create_user(params) do
-    ResolverHitGenServer.add_hit("create_user")
-
     Actions.create(User, params)
   end
 
   def update_user(id, params) do 
-   ResolverHitGenServer.add_hit("update_user")
-
     Actions.update(User, id, params)
   end
 
   def update_user_preference(id, params) do 
-    ResolverHitGenServer.add_hit("update_user_preference")
-
-    {:ok, preference} = Actions.find(Preference, %{user_id: id})
-
-    Actions.update(Preference, preference, params)
+    with {:ok, preference} <-  Actions.find(Preference, %{user_id: id}) do
+      Actions.update(Preference, preference, params)
+    end
   end
 end
