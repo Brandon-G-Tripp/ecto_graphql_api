@@ -63,11 +63,11 @@ defmodule GraphqlApiAssignmentWeb.Schema.Queries.ResolverHitsTest do
 
       %{"resolverHits" => %{
         "key" => _key,
-        "queryHits" => queryHits_after_query
+        "queryHits" => query_hits_after_query
         }
       } = data
 
-      assert query_hits + 1 === queryHits_after_query
+      assert query_hits + 1 === query_hits_after_query
 
 
     end
