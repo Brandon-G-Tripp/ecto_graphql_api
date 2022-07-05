@@ -19,7 +19,7 @@ defmodule GraphqlApiAssignment.Application do
       {Absinthe.Subscription, GraphqlApiAssignmentWeb.Endpoint},
       # Start a worker by calling: GraphqlApiAssignment.Worker.start_link(arg)
       # {GraphqlApiAssignment.Worker, arg}
-      GraphqlApiAssignment.ResolverHitGenServer
+      GraphqlApiAssignment.ResolverHits
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
