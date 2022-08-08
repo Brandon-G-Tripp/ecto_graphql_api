@@ -27,7 +27,7 @@ defmodule GraphqlApiAssignment.Accounts.User do
     |> cast_assoc(:preference)
   end
 
-  def join_preferences(query \\ User) do 
+  def user_by_preference(query \\ User) do 
     join(query, :inner, [u], p in assoc(u, :preference), as: :preference)
   end
 
