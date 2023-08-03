@@ -1,6 +1,5 @@
 defmodule GraphqlApiAssignment.Accounts do
-  alias GraphqlApiAssignment.Accounts.User
-  alias GraphqlApiAssignment.Accounts.Preference
+  alias GraphqlApiAssignment.Accounts.{User, Preference}
   alias EctoShorts.Actions
 
   @available_preferences [:likes_emails, :likes_phone_calls]
@@ -10,7 +9,6 @@ defmodule GraphqlApiAssignment.Accounts do
     %{filters: filter_params, preference: preference_params} = reformat_params(params)
 
     User 
-    |> User.join_preferences
     |> User.where_preference(preference_params)
     |> Actions.all(filter_params)
   end
