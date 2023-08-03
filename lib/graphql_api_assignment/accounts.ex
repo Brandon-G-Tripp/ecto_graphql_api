@@ -1,4 +1,5 @@
 defmodule GraphqlApiAssignment.Accounts do
+  alias GraphqlApiAssignment.ErrorUtils
   alias GraphqlApiAssignment.Accounts.{User, Preference}
   alias EctoShorts.Actions
 
@@ -25,7 +26,9 @@ defmodule GraphqlApiAssignment.Accounts do
   end
   
   def find(params) do
-    Actions.find(User, params)
+      Actions.find(User, params)
+    rescue
+      e -> ErrorUtils.not_found(e, %{details: params})
   end
 
   def create_user(params) do
